@@ -1,6 +1,8 @@
 # multiple_accounts_detection
 
+################################
 To run sample dataset 
+################################
 
 1 Using Katz unsupervised learning and semi-supervised learning with Katz
 
@@ -15,6 +17,4 @@ python test_norm_2.py
 python test_kmeans.py
 
 
-################################
-For large scale of dataset 
-
+  
