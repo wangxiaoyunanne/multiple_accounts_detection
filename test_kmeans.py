@@ -1,4 +1,4 @@
-#### test_kmeans.ppy
+#### test_kmeans.py
 from numpy import linalg as LA
 import pandas as pd
 import numpy as np
@@ -80,7 +80,7 @@ X_IDs= []
 ID_bipart = df_bipart.ix[:,0]
 data_bipart = df_bipart.ix[:,1:]
 # need to determin how do you get num_group
-num_group = 5
+num_group = 3
 random.seed(17)
 kmeans_bipart = KMeans(n_clusters=num_group, random_state=0).fit(data_bipart)
 labels_bipart = kmeans_bipart.labels_
@@ -214,140 +214,6 @@ for i_group in range(num_group) :
 roc = roc_auc_score(global_truth, global_fitted )
 print roc
 print classification_report(global_truth,global_fitted)
-
-if False:'''
-
-#y_fitted
-index_test= np.where(np.asarray(labels) == -1)[0]
-y_ind_test = [y[i] for i in index_test]
-y_ind_fitted = [y_fitted_s[i] for i in index_test]
-roc = roc_auc_score(y_ind_test,y_ind_fitted)
-sum(y_fitted_s)
-print roc
-print score
-
-output_file = 'output_03000.txt'
-with open (output_file, "w") as text_file:
-    text_file.write("{}".format((cut,score,fpe,fne )))
-
-text_file.close()
-
-######################################################
-###########try matrix 
-X_mat = np.zeros((sample_size, 128))
-A_mat = np.zeros((l,l))
-
-for i in range(l):
-    for j in range(l):
-        if (truth['truth'][i] == truth['truth'][j]):
-            A_mat[i,j] = 1
-        else :
-            A_mat[i,j] = 0
-
-A = A_mat[sample_index, :][:, sample_index ]
-ID_bipart = df_bipart.ix[:,0]
-
-for i in range(sample_size) :
-    ID_1 = truth['ID'][sample_index[i]]
-    index_1 = np.where(ID_bipart == ID_1 )[0][0]
-    X_mat[i,:] = df_bipart.iloc[index_1][1:]
-   # for j in range(sample_size) :
-   #     A[i,j] =  A_mat[sample_index[i], sample_index[j]]
-
-
-   
-XTX_1 =np.linalg.pinv( np.dot(X_mat.T,X_mat))
-XTAX = np.dot(np.dot(X_mat.T,A),X_mat)
-M = np.dot(np.dot(XTX_1,XTAX),XTX_1) 
-
-X_new = np.zeros((l-sample_size, 128))
-left_index =  list(set(range(l))- set (sample_index))
-
-for i in range(l-sample_size) :
-    ID_2 = truth['ID'][left_index[i]]
-    index_2 = np.where(ID_bipart == ID_2)[0][0]
-    X_new[i,:] = df_bipart.iloc[index_2][1:]
-
-A_2 = A_mat[sample_index,:][:, left_index]
-A_3 = A_mat[left_index,:][:, sample_index]
-A_4 = A_mat[left_index,:][:, left_index]
-
-def fit_mat (X1,M,X2):
-    return np.dot(np.dot(X1,M),X2.T) 
-
-A_f1 = fit_mat(X_mat,M, X_mat)
-A_f2 = fit_mat(X_mat,M, X_new) #A_2
-A_f3 = fit_mat(X_new,M,X_mat) #A_3
-A_f4 = fit_mat(X_new,M,X_new) #A_4
-
-def res_mat(Af,A_true,cut,diag = False) :
-    thres = np.percentile(Af.reshape(-1),( 1-cut)*88)
-    if diag == True: 
-        np.fill_diagonal(Af, thres + 1 )
-    Af_p = np.where (Af.reshape(-1) > thres)[0]
-    result_true = A_true.reshape(-1)
-    A_p = np.where(result_true == 1)[0]
-    #print Af_p.diagonal()
-    #print len(A_p)
-    print thres
-    result = np.zeros(len(result_true))
-    result[Af_p] = 1
-    fpe = len(set(Af_p)- set(A_p))
-    fne = len(set(A_p)- set(Af_p))
-    roc = roc_auc_score(result_true,result)
-    return [fpe, fne,sum(result_true),roc]
-
-
-
-res_mat(A_f1,A, cut, True)
-res_mat(A_f2, A_2, cut)
-res_mat(A_f3, A_3, cut)
-res_mat(A_f4, A_4, cut, True)
-'''
-
-if False:'''
-label_prop_model = LabelSpreading(kernel = 'knn', n_neighbors = 4, alpha = 0.155)
-label_prop_model.fit(X_train, labels)
-y_fitted = label_prop_model.predict_proba(X_train)
-'''
-
-
-
-
-if False :'''
-## norm of each pairs of vectors
-for i in range (len(df)):
-    for j in range(len(df)) :
-        a = abs(df.iloc[i][1:128] - df.iloc[j][1:128])
-        mat[i,j] = LA.norm(a)
-
-# print pairwised data
-for i in  range(70):
-    for j in range(i+1,70):
-        if abs (mat[i,j]) < 0.3:
-            print (df.ix[i,0], df.ix[j,0])
-
-
-sample = [[1066017246744202,'mostafa.mosad3'],[975611912520299,'mostafa.mosad.10'],[ 1036909843057172,'mostafa.mosad.10' ],[190866118021578,'mostafa.mosad.1804'],[ 1153797658036234,'mostafa.mosad.9889'],[ 1170003323079675,'mostafa.mosad.7' ]]
-
-sample_vec = []
-#print sample[5][0]
-for i in range (len(sample)):
-    sample_vec = sample_vec + ( df[df.ix[:,0]==sample[i][0]].index.tolist())
-
-
-
-print sample_vec
-for i in  range(70):
-    min_dist = []
-    for j in range(len(sample)):
-        if (mat[i,sample_vec[j]]< 0.3):
-            min_dist.append(sample[j][1])
-            min_dist.append(mat[i,sample_vec[j]])
-    print (df.ix[i,0],min_dist )        
-'''
-
-
 
 
 
