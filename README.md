@@ -22,6 +22,30 @@ python test_kmeans.py
 
 You could change the num_group to see how the number of clusters effect on the performance in both speed and accuracy.
 
+################################
+Requirement
+################################
+Python 2.7 
+
+NumPy 1.13
+
+Pandas 0.22
+
+NetworkX 2.1
+
+sklearn 0.19.1
+
+################################
+Reference
+################################
+Multiple Accounts Detection on Facebook Using Semi-Supervised Learning on Graphs
+
+Xiaoyun Wang, Chun-Ming Lai, Yunfeng Hong, Cho-Jui Hsieh, S. Felix Wu
+https://arxiv.org/abs/1801.09838
+
+
+
+
 
 
   
