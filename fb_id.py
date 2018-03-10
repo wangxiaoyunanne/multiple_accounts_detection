@@ -14,18 +14,12 @@ def primary_id_p(fb_id):
 	driver = webdriver.Firefox()
 	driver.get("https://www.facebook.com")
 	elem = driver.find_element_by_name("email")
-	#elem.send_keys("annewilson816@gmail.com")#facebook username
-        #elem.send_keys("sincere.crawl.cindy@gmail.com")#facebook username
-        elem.send_keys("sgpyc@hotmail.com")#facebook username
-        #elem.send_keys("wangxiaoyunanne@gmail.com")
+        elem.send_keys("sincere.crawl.cindy@gmail.com")#facebook username
         #elem.send_keys("cmlaih2@gmail.com")
         #elem.clear()
 	elem = driver.find_element_by_name("pass")#facebook password
 	#elem2.clear()
-	#elem.send_keys("wangxy37")
-        elem.send_keys("Sg840616")
-        #elem.send_keys("cindycrawford")
-        #elem.send_keys("wangxy37")
+        elem.send_keys("cindycrawford")
         #elem.send_keys("Zxcv1234")
 	#driver.implicitly_wait(5)
 	elem.send_keys(Keys.RETURN)
