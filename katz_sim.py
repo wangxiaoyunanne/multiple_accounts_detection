@@ -103,7 +103,7 @@ print np.percentile(distance, [90,95])
 
 
 labels = []
-thres = np.percentile(distance, 99.5)
+thres = np.percentile(distance, 95)
 
 fpe=0
 fne=0
