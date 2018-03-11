@@ -32,7 +32,7 @@ NumPy 1.13
 
 Pandas 0.22
 
-NetworkX 2.1
+NetworkX 1.10
 
 sklearn 0.19.1
 
